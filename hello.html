@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    body {
+      width: 500px;
+      height: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .button-container {
+      margin: 20px;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 90%;
+    }
+    .gallery img {
+      width: 30%;
+      margin-bottom: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <body>
+    <div class="button-container">
+      <button id="screenshotBtn">Screenshot</button>
+      <button id="newSessionBtn">New Session</button>
+    </div>
+
+    <div class="gallery">
+      <!-- Sample images, replace with your actual images or dynamically load them -->
+      <img src="https://example.com/image1.jpg" alt="Image 1" />
+      <img src="https://example.com/image2.jpg" alt="Image 2" />
+      <img src="https://example.com/image3.jpg" alt="Image 3" />
+      <img src="https://example.com/image4.jpg" alt="Image 4" />
+      <img src="https://example.com/image5.jpg" alt="Image 5" />
+      <img src="https://example.com/image6.jpg" alt="Image 6" />
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
