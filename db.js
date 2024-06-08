@@ -26,5 +26,32 @@ function openDB() {
     });
 }
 
+// Function to clear all screenshots from the store
+function clearScreenshots() {
+    return new Promise((resolve, reject) => {
+        openDB().then(db => {
+            const transaction = db.transaction(STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const clearRequest = store.clear();
+
+            clearRequest.onsuccess = () => {
+                console.log('All screenshots have been deleted.');
+                resolve();
+            };
+
+            clearRequest.onerror = (event) => {
+                console.error('Error clearing the store:', event.target.errorCode);
+                reject(event.target.errorCode);
+            };
+
+            transaction.oncomplete = () => {
+                db.close();
+            };
+        }).catch(error => {
+            reject(error);
+        });
+    });
+}
+
 // Export the openDB function so it can be imported by other scripts
-export { openDB, STORE_NAME };
+export { openDB, clearScreenshots, STORE_NAME };

@@ -1,5 +1,5 @@
 // popup.js
-import { openDB, STORE_NAME } from "./db.js";
+import { openDB, clearScreenshots, STORE_NAME } from "./db.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
     const db = await openDB();
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     request.onsuccess = (event) => {
         const images = event.target.result;
-        const gallery = document.querySelector('.gallery');
+        const gallery = document.getElementById('gallery');
         images.forEach(imgSrc => {
             var img = document.createElement('img');
             img.src = imgSrc;
@@ -22,8 +22,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 });
 
-
+var galleryDiv = document.getElementById('gallery');
 var screenshotButton = document.getElementById('screenshotBtn');
+var newSessionButton = document.getElementById('newSessionBtn');
 
 screenshotButton.addEventListener('click', function () {
     chrome.runtime.sendMessage({ action: "captureVisibleTab" }, function (response) {
@@ -33,9 +34,24 @@ screenshotButton.addEventListener('click', function () {
             // document.body.appendChild(img);
 
             // Append the image to the gallery
-            document.querySelector('.gallery').appendChild(img);
+            document.getElementById('gallery').appendChild(img);
         } else {
             console.error('Failed to capture the tab.');
         }
+    });
+});
+
+
+newSessionButton.addEventListener('click', function() {
+    // Clear all images in the gallery
+    while (galleryDiv.firstChild) {
+        galleryDiv.removeChild(galleryDiv.firstChild);
+    }
+
+    // Call the clearAllScreenshots function to clear IndexedDB
+    clearScreenshots().then(() => {
+        console.log('Gallery and database cleared successfully.');
+    }).catch(error => {
+        console.error('Failed to clear database:', error);
     });
 });
